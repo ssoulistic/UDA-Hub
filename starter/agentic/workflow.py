@@ -28,8 +28,8 @@ graph.add_node("escalation", escalation_node)
 
 graph.set_entry_point("classifier")
 
-graph.add_edge("classifier", "resolver")  # 무조건 이어야 함 (조건부 아님)
-graph.add_edge("resolver", "supervisor")  # 항상 Supervisor를 거침
+graph.add_edge("classifier", "resolver")
+graph.add_edge("resolver", "supervisor")
 
 graph.add_conditional_edges("supervisor", route_after_supervisor)
 
