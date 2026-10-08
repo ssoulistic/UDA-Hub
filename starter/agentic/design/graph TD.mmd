@@ -1,8 +1,10 @@
 graph TD
     A[Ticket Ingested] --> B[Classifier Agent]
-    B -->|needs_escalation = false| C[Resolver Agent]
-    B -->|needs_escalation = true| E[Escalation Agent]
+    B --> C[Resolver Agent]
     C --> D[Supervisor Agent]
-    D -->|is_approved = true| F[END]
-    D -->|is_approved = false| C
+    D -->|needs_escalation = true| E[Escalation Agent]
+    D -->|needs_escalation = false AND is_approved = true| F[END]
+    D -->|needs_escalation = false AND is_approved = false AND urgency = high| E
+    D -->|needs_escalation = false AND is_approved = false AND resolver_attempts >= max| E
+    D -->|needs_escalation = false AND is_approved = false, retries remaining| C
     E -->|interrupt: human decision| F
